@@ -1,0 +1,40 @@
+import telebot
+
+TOKEN= "5900285924:AAEUzwwR1TbQyTZ9NXAW6ei1lT8LkZ9c8k8"
+bot = telebot.TeleBot(TOKEN)
+
+@bot.message_handler(команды=['start', 'help'])
+справка def(сообщение: telebot.types.Сообщение):
+ text = 'Я твой бот-конвертер валют и вот что умею: \n\
+показывать списки доступных для конвертации валют /values \n\
+конвертировать валюты, для этого необходимо \n\
+ввести команду: <из какой валюты> <в какую валюту> <количество>'
+ bot.reply_to(message, f'Привет, {message.chat.username}!\n' + текст)
+
+@bot.message_handler( сontent_types=[''])
+значения определения (сообщение: telebot.types.Сообщение):
+ text = 'Доступные валюты: '
+ для ключа в keys.keys():
+ text = '\n'.присоединиться((текст, ключ, ))
+ bot.reply_to(сообщение, текст)
+
+@bot.message_handler(команды=['текст', ])
+преобразование в деф (сообщение: telebot.types.Сообщение):
+ попробуй:
+ значения = сообщение.текст.разделить(' ')
+ если len(значения) != 3:
+ raise ConvertionException('Слишком много параметров')
+
+ котировка, база, сумма = значения
+ total_base = CryptoConverter.convert(котировка, база, сумма)
+
+ за исключением исключения ConvertionException как e:
+ bot.reply_to(message, f'Ошибка пользователя.\n{e}')
+
+ за исключением Исключения в виде e:
+ bot.reply_to(message, f'Хм, что-то пошло не так с {e}')
+ ещё:
+ text = f'Стоимость {amount} {quote} в {base} = {total_base}'
+ бот.отправить_сообщение(message.chat.id , текст)
+
+бот.опрос()
